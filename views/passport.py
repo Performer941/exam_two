@@ -115,4 +115,9 @@ def image_code():
 
     session['image_code'] = text  # 存储到session中，也就是说只要是这个用户访问，此时image_code就是整个值，不用的同行得到的是自己需要的值
 
-    return "这里是要返回的图片数据，请实现功能...."
+    content = make_response(image_content)
+
+    content.headers['Content-Type'] = 'image/png'
+
+    return content
+
