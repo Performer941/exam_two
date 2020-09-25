@@ -50,6 +50,8 @@ def detail(news_id):
     user_id = session.get("user_id")
     nick_name = session.get("nick_name")
 
+    clicks_top_6_news = db.session.query(News).order_by(-News.clicks).limit(6)
+
     # 既然News模型类中已经添加了与User模型类关联的代码，即relationship那句话，此时就意味着可以通过News对象找到对应User对象
     # 根据news对象，找作者
     # print(news.user.nick_name)
@@ -58,4 +60,4 @@ def detail(news_id):
     news_author.followers_num = news_author.followers.count()
     news_author.can_follow = user_id not in [x.id for x in news_author.followers]
 
-    return render_template("detail.html", news=news, nick_name=nick_name, news_author=news_author)
+    return render_template("detail.html", news=news, nick_name=nick_name, clicks_top_6_news=clicks_top_6_news, news_author=news_author)
