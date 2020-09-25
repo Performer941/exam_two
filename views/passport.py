@@ -53,6 +53,16 @@ def register():
             "errno": 0,
             "errmsg": "登录成功..."
         }
+        user = db.session.query(User).filter(User.mobile == mobile, User.password_hash == password).first()
+        if user:
+            ret = {
+                "errno": 0,
+                "errmsg": "登录成功"
+            }
+
+            session['user_id'] = user.id
+            session['nick_name'] = user.nick_name
+
     except Exception as ret:
         db.session.rollback()
 
